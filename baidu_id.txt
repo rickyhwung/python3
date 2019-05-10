@@ -1,0 +1,4 @@
+HandWriting_OCR
+App_ID = '16212043'
+API_Key = 'RyGkApu52Z6GFcaPsMVDvDIe'
+Secret Key = 'jLfKLdHX3P4QfYTWYXrC6yhHEgdlukdi'
