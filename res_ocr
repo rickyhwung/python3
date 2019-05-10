@@ -1,0 +1,17 @@
+{
+  'log_id': 8479043592354833322,
+  'words_result_num': 1,
+  'words_result':
+      [
+        {
+          'location':
+            {
+              'width': 4631,
+              'top': 0,
+              'height': 527,
+              'left': 0,
+            },
+          'words': '安微省合肥市蜀吆作北南路35号',
+        }
+      ]
+}
