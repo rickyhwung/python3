@@ -19,6 +19,20 @@ def txt_to_list(file_name):
         list_to_txt(file_name, find_file())
         return res
 
+#csv转换为列表,type=0:不处理表头,type=1：删除表头
+def csv_to_list(file_name,type='0'):
+    csvfile = open(file_name, 'r', encoding='UTF-8')
+    csvreader = csv.reader(csvfile)
+    final_list = list(csvreader)
+
+    if (type == '1'):
+        res_list_head = final_list[0]
+        final_list.__delitem__(0)
+        res_list = final_list
+        return res_list, res_list_head
+    else:
+        res_list = final_list
+        return res_list, []
 
 #列表写入txt文件,覆盖模式
 def list_to_txt(file_name, data):
@@ -37,7 +51,7 @@ def list_to_txt(file_name, data):
 
 #列表写入csv文件
 def list_to_csv(file_name, data):
-    file_csv = codecs.open(file_name, 'w+', 'utf-8')  # 追加
+    file_csv = codecs.open(file_name, 'w+', 'utf-8',)  # 追加
     writer = csv.writer(file_csv, delimiter=' ', quotechar=' ', quoting=csv.QUOTE_MINIMAL)
     for data in data:
         writer.writerow(data)
