@@ -18,9 +18,9 @@ def csv_to_list(file_name):
     try:
         if csvfile.name == file_name:
             csvreader = csv.reader(csvfile)
-            final_list = list(csvreader)
-            return final_list
+            res_list = list(csvreader)
+            return res_list
     finally:
         csvfile.close()
-        print('成功读取{}条记录'.format(len(final_list)))
+        print('成功读取{}条记录'.format(len(res_list)))
 
