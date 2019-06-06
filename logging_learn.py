@@ -41,6 +41,7 @@ ch.setFormatter(formatter)
 # 给logger添加handler
 logger.addHandler(fh)
 logger.addHandler(ch)
+logger.addHandler(fh_date)
 myapp.addHandler(fh_date)
 # logger.addHandler(fh_date)
 
