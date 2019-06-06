@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        {% load static %}
+	<title>发帖页</title>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" charset="utf8" src={% static "kindeditor/kindeditor-all.js" %}></script>
+	<script type="text/javascript" charset="utf8" src={% static "kindeditor/lang/zh-CN.js" %}></script>
+	<script type="text/javascript" charset="utf8" src={% static "kindeditor/config.js" %}></script>
+
+    </head>
+	<body>
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<nav class="navbar navbar-default" role="navigation">
+						<div class="navbar-header">
+							 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Python学习论坛</a>
+						</div>
+						
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">
+								<li class="active">
+									 <a href="/posts">所有帖子</a>
+								</li>
+								<li>
+									 <a href="/sections">版块一览</a>
+								</li>
+								
+							</ul>
+
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									 <a href="{{nav2}}">{{nav1}}</a>
+								</li>
+								<li>
+									 <a href="{{nav4}}">{{nav3}}</a>
+								</li>
+							</ul>
+						</div>
+						
+					</nav>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-9 column">
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+							<div class="page-header">
+								<h1>
+									发帖页 <small>Python学习论坛</small>
+								</h1>
+							</div>
+							<div class="list-group">
+								<form role="form" method="post">
+                                    {% csrf_token %}
+											<div class="form-group">
+												 <label>帖子名称</label><input id="postname" class="form-control"  name="postname" />
+											</div>
+                                            <div class="form-group">
+                                            {% for item in secidandname%}
+											<div class="radio">
+												  <label>
+													<input type="radio" name="secid" value="{{item.0}}">
+													{{item.1}}
+												  </label>
+												</div>
+											{% endfor %}
+                                            </div>
+											<div class="form-group">
+											<label>帖子内容</label>
+											<div class="textarea">
+												  <div class="textarea">
+												  <textarea style="width:800px;height:400px;"  name='content'>在此输入帖子内容</textarea>
+											</div>
+											</div>
+                                              </div>
+											 <button type="submit" class="btn btn-default">发布帖子</button>
+								</form>
+								
+								
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-md-3 column">
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+							<h3>
+								Python学习论坛简介
+							</h3>
+						</div>
+					</div>
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+							<h2>
+								关于我们
+							</h2>
+							<p>
+								我们是极客学院的Python课堂的一个小论坛项目。
+							</p>
+							<p>
+								 <a class="btn" href="http://www.jikexueyuan.com">了解更多 »</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

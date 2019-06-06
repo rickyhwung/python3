@@ -1,41 +1,51 @@
-import urllib, urllib3, zlib
-from io import StringIO
-from gzip import GzipFile
-from urllib import request
+import os
+import logging
+import uuid
+from logging import Handler, FileHandler, StreamHandler
 
-def loadData(url):
-    request1 = urllib.request.urlopen(url)
-    request1.add_header('Accept-encoding', 'gzip,deflate')
-    response = url(request1)
-    content = response.read()
-    encoding = response.info().get('Content-Encoding')
-    if encoding == 'gzip':
-        content = gzip(content)
-    elif encoding == 'deflate':
-        content = deflate(content)
-    return content
 
-def gzip(data):
-    buf = StringIO(data)
-    f = gzip.GzipFile(fileobj=buf)
-    return f.read()
+class PathFileHandler(FileHandler):
+    def __init__(self, path, filename, mode='a+', encoding='UTF-8', delay=False):
 
-def deflate(data):
-    try:
-        return zlib.decompress(data, -zlib.MAX_WBITS)
-    except zlib.error:
-        return zlib.decompress(data)
+        filename = os.fspath(filename)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        self.baseFilename = os.path.join(path, filename)
+        self.mode = mode
+        self.encoding = encoding
+        self.delay = delay
+        if delay:
+            Handler.__init__(self)
+            self.stream = None
+        else:
+            StreamHandler.__init__(self, self._open())
 
-def main():
-    url = "http://www.chinapost.com.cn/html1/category/181312/8238-1.htm"
-    content = loadData(url)
-    print(content)
 
-if __name__ == '__main__':
-    main()
+class Loggers(object):
+    # 日志级别关系映射
+    level_relations = {
+        'debug': logging.DEBUG, 'info': logging.INFO, 'warning': logging.WARNING,
+        'error': logging.ERROR, 'critical': logging.CRITICAL
+    }
 
-header = {
-    'Host': 'www.chinapost.com.cn',
-    'If-None-Match': 'E95AE5D074FFC0026BEB20217A5FEFBE'
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
-}
+    def __init__(self, filename='{uid}.log'.format(uid=uuid.uuid4()), level='info', log_dir='log',
+                 fmt='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'):
+        self.logger = logging.getLogger(filename)
+        abspath = os.path.dirname(os.path.abspath(__file__))
+        self.directory = os.path.join(abspath, log_dir)
+        format_str = logging.Formatter(fmt)  # 设置日志格式
+        self.logger.setLevel(self.level_relations.get(level))  # 设置日志级别
+        stream_handler = logging.StreamHandler()  # 往屏幕上输出
+        stream_handler.setFormatter(format_str)
+        file_handler = PathFileHandler(path=self.directory, filename=filename, mode='a+', encoding='UTF-8')
+        file_handler.setFormatter(format_str)
+        self.logger.addHandler(stream_handler)
+        self.logger.addHandler(file_handler)
+
+
+if __name__ == "__main__":
+    txt = "关注公众号【进击的 Coder】，回复『日志代码』可以领取文章中完整的代码以及流程图"
+    log = Loggers(level='debug')
+    log.logger.info(4)
+    log.logger.info(5)
+    log.logger.info(txt)
