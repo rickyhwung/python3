@@ -50,10 +50,10 @@ def list_to_txt(file_name, data):
         return None
 
 #列表写入csv文件
-def list_to_csv(file_name, data):
+def list_to_csv(file_name, datas):
     file_csv = codecs.open(file_name, 'w+', 'utf-8',)  # 追加
     writer = csv.writer(file_csv, delimiter=' ', quotechar=' ', quoting=csv.QUOTE_MINIMAL)
-    for data in data:
+    for data in datas:
         writer.writerow(data)
     print("保存文件成功，处理结束")
 
@@ -112,6 +112,23 @@ def time_format(input_time):
                 'fmt_sec': fmt_time[17:19],
                 }
     return res_time
+
+#返回YYYYMMDD、HHMMSS格式时间字符串
+def time_to_str(input_time, res_type='hms'):
+    if res_type == 'ymd':
+        res_time = time.strftime("%Y%m%d", time.localtime(input_time))
+        return res_time
+    elif res_type == 'hms':
+        res_time = time.strftime("%H%M%S", time.localtime(input_time))
+        return res_time
+    elif res_type == 'ymdhms':
+        res_time = time.strftime("%Y%m%d%H%M%S", time.localtime(input_time))
+        return res_time
+    else:
+        res_time = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+        return res_time
+
+
 
 #返回文件创建时间的格式化字典，利用time_format()函数格式化
 def file_creat_fmt(file_name, time_type='0'):

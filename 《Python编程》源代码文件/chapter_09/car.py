@@ -32,3 +32,6 @@ class Car():
     def increment_odometer(self, miles):
         """Add the given amount to the odometer reading."""
         self.odometer_reading += miles
+
+    def fill_gas_tank(self, gas=0):
+        print('gas filled with {}.L'.format(str(gas)))

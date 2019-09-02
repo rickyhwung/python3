@@ -16,11 +16,11 @@ class Battery():
     def get_range(self):
         """Print a statement about the range this battery provides."""
         if self.battery_size == 60:
-            range = 140
+            car_range = 140
         elif self.battery_size == 85:
-            range = 185
+            car_range = 185
             
-        message = "This car can go approximately " + str(range)
+        message = "This car can go approximately " + str(car_range)
         message += " miles on a full charge."
         print(message)
     
@@ -35,3 +35,6 @@ class ElectricCar(Car):
         """
         super().__init__(manufacturer, model, year)
         self.battery = Battery()
+
+    def fill_gas_tank(self, gas):
+        print("This car doesn't need a gas tank!")

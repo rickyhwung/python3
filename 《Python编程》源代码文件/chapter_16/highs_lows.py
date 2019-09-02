@@ -3,6 +3,7 @@ from datetime import datetime
 
 from matplotlib import pyplot as plt
 
+#os.chdir('D:\\xampp\\htdocs\\py3\\《Python编程》源代码文件\\chapter_16')
 # Get dates, high, and low temperatures from file.
 filename = 'death_valley_2014.csv'
 with open(filename) as f:
